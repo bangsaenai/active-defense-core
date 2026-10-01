@@ -1,0 +1,38 @@
+# CMake & Build Outputs
+build/
+bin/
+lib/
+out/
+*.dir/
+
+# MSVC & Visual Studio Temporary Files
+*.exe
+*.dll
+*.lib
+*.a
+*.so
+*.dylib
+*.pdb
+*.obj
+*.o
+*.ilk
+*.exp
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
+.vs/
+CMakeCache.txt
+CMakeFiles/
+
+# Python Cache & Virtual Environments
+__pycache__/
+*.pyc
+.pytest_cache/
+env/
+venv/
+
+# IDE & OS Specific Files
+.vscode/
+.DS_Store
+Thumbs.db

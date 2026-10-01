@@ -1,0 +1,45 @@
+name: Active Defense Core CI Benchmark
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-benchmark:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build C-Core Project
+      run: cmake --build ${{github.workspace}}/build --config Release
+
+    - name: Run Automated Unit Tests
+      working-directory: ${{github.workspace}}/build
+      run: |
+        # Windows vs Unix execution handling
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          ./Release/test_runner.exe
+        else
+          ./test_runner
+        fi
+      shell: bash
+
+    - name: Run Microsecond Speed Benchmark
+      working-directory: ${{github.workspace}}/build
+      run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          ./Release/benchmark_perf.exe
+        else
+          ./benchmark_perf
+        fi
+      shell: bash

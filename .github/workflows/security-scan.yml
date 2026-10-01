@@ -1,0 +1,24 @@
+name: C-Native Security Code Scan
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Clang Tools
+      run: sudo apt-get update && sudo apt-get install -y clang-tidy cppcheck
+
+    - name: Run Cppcheck Security Analysis
+      run: |
+        cppcheck --enable=warning,style,performance,portability \
+                 --error-exitcode=1 \
+                 --inline-suppr \
+                 include/ src/

@@ -1,0 +1,3 @@
+EXPORTS
+    ad_encrypt_and_shred_inplace
+    ad_free_envelope
