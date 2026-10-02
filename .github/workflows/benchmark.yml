@@ -21,17 +21,9 @@ jobs:
 
     - name: Run Windows Test & Benchmark Executables
       run: |
-        if (Test-Path "build\Release\test_runner.exe") {
-            Write-Host "--- Running Test Runner ---"
-            & "build\Release\test_runner.exe"
-        }
-        if (Test-Path "build\Release\test_nuclear.exe") {
-            Write-Host "--- Running Nuclear Test ---"
-            & "build\Release\test_nuclear.exe"
-        }
-        if (Test-Path "build\Release\benchmark_perf.exe") {
-            Write-Host "--- Running Benchmark Perf ---"
-            & "build\Release\benchmark_perf.exe"
-        }
+        for /R build %%f in (*.exe) do (
+            echo Running %%f
+            "%%f"
+        )
         exit 0
-      shell: powershell
+      shell: cmd
