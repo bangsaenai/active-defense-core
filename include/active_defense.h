@@ -13,7 +13,7 @@
 /* DLL Export / Import / Static Linkage Macros for Windows MSVC */
 #if defined(_WIN32) || defined(__CYGWIN__)
     #if defined(AD_STATIC)
-        #define AD_API              /* Static linking
+        #define AD_API              /* Static linking */
     #elif defined(AD_EXPORTS)
         #define AD_API __declspec(dllexport)
     #else
