@@ -21,24 +21,18 @@ jobs:
 
     - name: Run Windows Test & Benchmark Executables
       run: |
-        $releaseDir = "build\Release"
-        if (Test-Path $releaseDir) {
-            # Copy DLLs to the execution directory
-            Get-ChildItem -Path "build" -Recurse -Filter "*.dll" | Copy-Item -Destination $releaseDir -Force -ErrorAction SilentlyContinue
-            
-            # Run test and benchmark executables
-            if (Test-Path "$releaseDir\test_runner.exe") {
-                Write-Host "--- Running Test Runner ---"
-                & "$releaseDir\test_runner.exe"
-            }
-            if (Test-Path "$releaseDir\test_nuclear.exe") {
-                Write-Host "--- Running Nuclear Test ---"
-                & "$releaseDir\test_nuclear.exe"
-            }
-            if (Test-Path "$releaseDir\benchmark_perf.exe") {
-                Write-Host "--- Running Benchmark Perf ---"
-                & "$releaseDir\benchmark_perf.exe"
-            }
-        }
-        exit 0
-      shell: powershell
+        set PATH=%CD%\build\Release;%PATH%
+        if exist build\Release\test_runner.exe (
+            echo --- Running Test Runner ---
+            build\Release\test_runner.exe
+        )
+        if exist build\Release\test_nuclear.exe (
+            echo --- Running Nuclear Test ---
+            build\Release\test_nuclear.exe
+        )
+        if exist build\Release\benchmark_perf.exe (
+            echo --- Running Benchmark Perf ---
+            build\Release\benchmark_perf.exe
+        )
+        exit /b 0
+      shell: cmd
