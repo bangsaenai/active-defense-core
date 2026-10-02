@@ -19,10 +19,5 @@ jobs:
     - name: Build C-Core Project
       run: cmake --build build --config Release
 
-    - name: Run Automated Unit Tests
-      run: .\build\Release\test_runner.exe
-      shell: cmd
-
-    - name: Run Microsecond Speed Benchmark
-      run: .\build\Release\benchmark_perf.exe
-      shell: cmd
+    - name: Run CTest Suite
+      run: ctest --test-dir build --build-config Release --output-on-failure
