@@ -2,8 +2,13 @@
 
 [![C99 Standard](https://img.shields.io/badge/C-C99-blue.svg)](https://en.wikipedia.org/wiki/C99)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build & Benchmark Status](https://github.com/active-defense/active-defense-core/actions/workflows/benchmark.yml/badge.svg)](https://github.com/active-defense/active-defense-core/actions)
-[![Security Scan](https://github.com/active-defense/active-defense-core/actions/workflows/security-scan.yml/badge.svg)](https://github.com/active-defense/active-defense-core/actions)
+
+# Active Defense Core 🛡️
+
+[![Security Scan Status](https://github.com/bangsaenai/active-defense-core/actions/workflows/security-scan.yml/badge.svg)](https://github.com/bangsaenai/active-defense-core/actions/workflows/security-scan.yml)
+[![Benchmark Status](https://github.com/bangsaenai/active-defense-core/actions/workflows/benchmark.yml/badge.svg)](https://github.com/bangsaenai/active-defense-core/actions/workflows/benchmark.yml)
+
+---
 
 > **Ultra-High Performance C-Native Zero-Allocation Encryption Primitive & Transient RAM Shredding Engine.**
 
