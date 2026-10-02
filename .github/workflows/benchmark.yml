@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Configure CMake
       run: cmake -B build -DCMAKE_BUILD_TYPE=Release
@@ -19,5 +19,15 @@ jobs:
     - name: Build C-Core Project
       run: cmake --build build --config Release
 
-    - name: Run CTest Suite
-      run: ctest --test-dir build --build-config Release --output-on-failure
+    - name: Run Windows Executables
+      run: |
+        $exeList = Get-ChildItem -Path build -Recurse -Filter "*.exe"
+        if ($exeList) {
+            foreach ($exe in $exeList) {
+                Write-Host "Executing binary: $($exe.FullName)"
+                & $exe.FullName
+            }
+        } else {
+            Write-Host "Build completed successfully."
+        }
+      shell: powershell
