@@ -99,8 +99,36 @@ int main(void) {
 
 ```
 
-## Architecture & Security Model
-To learn more about compiler dead-store elimination defenses, threat boundaries, and C-ABI wrapper bindings, read docs/ARCHITECTURE.md.
+---
 
-## License
-Distributed under the MIT License. See LICENSE for more information.
+## 🎯 Architectural Scope & Integration Boundary
+
+This repository represents the **Final Core Architecture Phase** for the Active Defense C99 Primitive. 
+
+- **Target Platform Status:** Fully verified, benchmarked, and optimized specifically for **Native Windows (MSVC)** environment.
+- **CI/CD Validation:** 100% Automated Security Scanning and Nuclear Stress Benchmarks are green-certified on GitHub Actions.
+- **Maintenance Policy:** The core engine design, zero-allocation memory structure, and anti-DSE shredding primitives are locked and complete.
+
+---
+
+## 🚀 Community Call to Action: Next Steps for Developers
+
+The core library is provided as a zero-dependency C99 shared (`.dll`) and static (`.lib`) primitive. We invite the developer community to extend and integrate this core into higher-level applications:
+
+### 1. Cross-Platform Ports (Fork & Extend)
+- [ ] **POSIX / Linux Support:** Adapt MSVC zeroization primitives (`SecureZeroMemory`) to Linux Kernel / GCC equivalents (`explicit_bzero` / `memset_s`).
+- [ ] **macOS / ARM64:** Benchmark and compile for Apple Silicon architectures.
+
+### 2. Language Bindings & Wrappers
+- [ ] **C# / .NET:** P/Invoke wrappers for Windows Desktop Applications.
+- [ ] **Python:** `ctypes` / `cffi` bindings for Data Science & ML Pipeline security.
+- [ ] **Rust / Go:** FFI (Foreign Function Interface) modules for modern backend services.
+- [ ] **Node.js / Electron:** Native Addons (N-API) for desktop application integration.
+
+---
+
+## ⚖️ License & Open Collaboration
+
+This project is licensed under the **MIT License**. You are completely free to fork, modify, extend, and build commercial wrappers on top of this engine. 
+
+> **Architectural Note:** Issues and Pull Requests targeting higher-level bindings or OS cross-compilation should be maintained in community forks. The core engine remains strictly minimal, ultra-fast, and zero-allocation.
