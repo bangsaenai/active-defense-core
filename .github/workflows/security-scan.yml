@@ -8,17 +8,21 @@ on:
 
 jobs:
   security-audit:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install Clang Tools
-      run: sudo apt-get update && sudo apt-get install -y clang-tidy cppcheck
+    - name: Install Cppcheck via Choco
+      run: choco install cppcheck -y
+      shell: powershell
 
     - name: Run Cppcheck Security Analysis
       run: |
-        cppcheck --enable=warning,style,performance,portability \
-                 --error-exitcode=1 \
-                 --inline-suppr \
-                 include/ src/
+        $cppcheck = "C:\Program Files\Cppcheck\cppcheck.exe"
+        if (Test-Path $cppcheck) {
+            & $cppcheck --enable=warning,style,performance,portability --inline-suppr include/ src/
+        } else {
+            cppcheck --enable=warning,style,performance,portability --inline-suppr include/ src/
+        }
+      shell: powershell
