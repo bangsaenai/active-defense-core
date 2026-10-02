@@ -20,11 +20,9 @@ jobs:
       run: cmake --build build --config Release
 
     - name: Run Automated Unit Tests
-      working-directory: ${{github.workspace}}/build
-      run: .\Release\test_runner.exe
+      run: .\build\Release\test_runner.exe
       shell: cmd
 
     - name: Run Microsecond Speed Benchmark
-      working-directory: ${{github.workspace}}/build
-      run: .\Release\benchmark_perf.exe
+      run: .\build\Release\benchmark_perf.exe
       shell: cmd
