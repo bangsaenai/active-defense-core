@@ -21,9 +21,9 @@ jobs:
 
     - name: Run Windows Test & Benchmark Executables
       run: |
-        for /R build %%f in (*.exe) do (
+        cd build\Release
+        for %%f in (*.exe) do (
             echo Running %%f
             "%%f"
         )
-        exit 0
       shell: cmd
