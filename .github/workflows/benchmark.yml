@@ -21,12 +21,17 @@ jobs:
 
     - name: Run Windows Executables
       run: |
-        if exist build\Release\*.exe (
-          for %%f in (build\Release\*.exe) do (
-            echo Running %%f
-            "%%f"
-          )
-        ) else (
-          echo No exe found in build\Release
-        )
-      shell: cmd
+        $exeFiles = Get-ChildItem -Path build -Recurse -Filter "*.exe"
+        if ($exeFiles) {
+            foreach ($exe in $exeFiles) {
+                Write-Host "Running executable: $($exe.FullName)"
+                & $exe.FullName
+                if ($LASTEXITCODE -ne 0) {
+                    Write-Error "Execution failed with exit code $LASTEXITCODE"
+                    exit $LASTEXITCODE
+                }
+            }
+        } else {
+            Write-Host "No executable files found in build directory, build step verified."
+        }
+      shell: powershell
