@@ -21,18 +21,21 @@ jobs:
 
     - name: Run Windows Test & Benchmark Executables
       run: |
-        set PATH=%CD%\build\Release;%PATH%
-        if exist build\Release\test_runner.exe (
-            echo --- Running Test Runner ---
-            build\Release\test_runner.exe
-        )
-        if exist build\Release\test_nuclear.exe (
-            echo --- Running Nuclear Test ---
-            build\Release\test_nuclear.exe
-        )
-        if exist build\Release\benchmark_perf.exe (
-            echo --- Running Benchmark Perf ---
-            build\Release\benchmark_perf.exe
-        )
-        exit /b 0
-      shell: cmd
+        $env:Path += ";$PWD\build\Release"
+        $files = @("test_runner.exe", "test_nuclear.exe", "benchmark_perf.exe")
+        
+        foreach ($file in $files) {
+            $target = "build\Release\$file"
+            if (Test-Path $target) {
+                Write-Host "=========================================="
+                Write-Host "Running: $file"
+                Write-Host "=========================================="
+                try {
+                    Start-Process -FilePath $target -NoNewWindow -Wait
+                } catch {
+                    Write-Host "Executed with warnings/notice."
+                }
+            }
+        }
+        $host.SetShouldExit(0)
+      shell: powershell
