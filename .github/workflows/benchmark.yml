@@ -21,13 +21,12 @@ jobs:
 
     - name: Run Windows Executables
       run: |
-        $exeList = Get-ChildItem -Path build -Recurse -Filter "*.exe"
-        if ($exeList) {
-            foreach ($exe in $exeList) {
-                Write-Host "Executing binary: $($exe.FullName)"
-                & $exe.FullName
-            }
-        } else {
-            Write-Host "Build completed successfully."
-        }
-      shell: powershell
+        if exist build\Release\*.exe (
+          for %%f in (build\Release\*.exe) do (
+            echo Running %%f
+            "%%f"
+          )
+        ) else (
+          echo No exe found in build\Release
+        )
+      shell: cmd
