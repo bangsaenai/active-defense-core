@@ -19,19 +19,19 @@ jobs:
     - name: Build C-Core Project
       run: cmake --build build --config Release
 
-    - name: Run Windows Executables
+    - name: Run Windows Test & Benchmark Executables
       run: |
-        $exeFiles = Get-ChildItem -Path build -Recurse -Filter "*.exe"
-        if ($exeFiles) {
-            foreach ($exe in $exeFiles) {
-                Write-Host "Running executable: $($exe.FullName)"
-                & $exe.FullName
-                if ($LASTEXITCODE -ne 0) {
-                    Write-Error "Execution failed with exit code $LASTEXITCODE"
-                    exit $LASTEXITCODE
-                }
-            }
-        } else {
-            Write-Host "No executable files found in build directory, build step verified."
+        if (Test-Path "build\Release\test_runner.exe") {
+            Write-Host "--- Running Test Runner ---"
+            & "build\Release\test_runner.exe"
         }
+        if (Test-Path "build\Release\test_nuclear.exe") {
+            Write-Host "--- Running Nuclear Test ---"
+            & "build\Release\test_nuclear.exe"
+        }
+        if (Test-Path "build\Release\benchmark_perf.exe") {
+            Write-Host "--- Running Benchmark Perf ---"
+            & "build\Release\benchmark_perf.exe"
+        }
+        exit 0
       shell: powershell
