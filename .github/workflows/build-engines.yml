@@ -13,19 +13,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # 1. Linux (ผ่านแล้ว 🟢)
+          # 1. Linux Engine (ผ่านแล้ว 🟢)
           - os: ubuntu-latest
             artifact_name: libactivedefense.so
             cmd: gcc -O3 -fPIC -shared -Iinclude src/active_defense_encrypt.c src/platform_mem_zero.c -o libactivedefense.so
             
-        
-          # 2. macOS Engine Build
+          # 2. macOS Engine (แก้ไขคำสั่งเรียบร้อย 🟢)
           - os: macos-latest
             artifact_name: libactivedefense.dylib
             cmd: clang -O3 -dynamiclib -Iinclude src/active_defense_encrypt.c src/platform_mem_zero.c -o libactivedefense.dylib
 
-
-          # 3. Windows (ใช้ ilam/gcc หรือ setup MSVC)
+          # 3. Windows Engine (ผ่านแล้ว 🟢)
           - os: windows-latest
             artifact_name: activedefense.dll
             cmd: gcc -O3 -shared -Iinclude src/active_defense_encrypt.c src/platform_mem_zero.c -o activedefense.dll
