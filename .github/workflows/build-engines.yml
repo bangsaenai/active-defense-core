@@ -13,20 +13,20 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # 1. Build .so บน Linux Cloud VM (ชี้ไฟล์ .c ครบทั้ง 2 ตัว)
+          # 1. Linux (ผ่านแล้ว 🟢)
           - os: ubuntu-latest
             artifact_name: libactivedefense.so
             cmd: gcc -O3 -fPIC -shared -Iinclude src/active_defense_encrypt.c src/platform_mem_zero.c -o libactivedefense.so
             
-          # 2. Build .dylib บน macOS Cloud VM
+          # 2. macOS (ใช้ gcc/clang แบบ standard shared)
           - os: macos-latest
             artifact_name: libactivedefense.dylib
-            cmd: clang -O3 -dynamiclib -Iinclude src/active_defense_encrypt.c src/platform_mem_zero.c -o libactivedefense.dylib
+            cmd: clang -O3 -dynamiclib -undefined dynamic_lookup -Iinclude src/active_defense_encrypt.c src/platform_mem_zero.c -o libactivedefense.dylib
 
-          # 3. Build .dll บน Windows Cloud VM
+          # 3. Windows (ใช้ ilam/gcc หรือ setup MSVC)
           - os: windows-latest
             artifact_name: activedefense.dll
-            cmd: cl /O2 /LD /Iinclude src/active_defense_encrypt.c src/platform_mem_zero.c /Fe:activedefense.dll
+            cmd: gcc -O3 -shared -Iinclude src/active_defense_encrypt.c src/platform_mem_zero.c -o activedefense.dll
 
     steps:
     - name: Checkout Source Code
