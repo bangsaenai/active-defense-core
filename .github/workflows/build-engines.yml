@@ -3,29 +3,30 @@ name: Build Active Defense Triple Engines
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch: # 
+  workflow_dispatch:
 
 jobs:
   build-all-platforms:
     name: Build Native Engine
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         include:
-          # 1. Build .so บน Linux Cloud VM (สำหรับ GCP / studio.bangsaenai.com)
+          # 1. Build .so บน Linux Cloud VM (ชี้ไฟล์ .c ครบทั้ง 2 ตัว)
           - os: ubuntu-latest
             artifact_name: libactivedefense.so
-            cmd: gcc -O3 -fPIC -shared -Iinclude src/active_defense.c -o libactivedefense.so
+            cmd: gcc -O3 -fPIC -shared -Iinclude src/active_defense_encrypt.c src/platform_mem_zero.c -o libactivedefense.so
             
-          # 2. Build .dylib บน macOS Cloud VM (สำหรับ Apple Silicon / Mac)
+          # 2. Build .dylib บน macOS Cloud VM
           - os: macos-latest
             artifact_name: libactivedefense.dylib
-            cmd: clang -O3 -dynamiclib -Iinclude src/active_defense.c -o libactivedefense.dylib
+            cmd: clang -O3 -dynamiclib -Iinclude src/active_defense_encrypt.c src/platform_mem_zero.c -o libactivedefense.dylib
 
-          # 3. Build .dll บน Windows Cloud VM (สำหรับ C# / Enterprise SDK)
+          # 3. Build .dll บน Windows Cloud VM
           - os: windows-latest
             artifact_name: activedefense.dll
-            cmd: cl /O2 /LD /Iinclude src/active_defense.c /Fe:activedefense.dll
+            cmd: cl /O2 /LD /Iinclude src/active_defense_encrypt.c src/platform_mem_zero.c /Fe:activedefense.dll
 
     steps:
     - name: Checkout Source Code
